@@ -199,6 +199,10 @@ install(TARGETS ${PROJECT_NAME} rqt_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
 )
 
+install(PROGRAMS scripts/initialize_origin.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
 )
