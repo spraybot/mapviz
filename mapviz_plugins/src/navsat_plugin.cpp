@@ -76,6 +76,10 @@ namespace mapviz_plugins
                      SLOT(SetDrawStyle(QString)));
     QObject::connect(ui_.color, SIGNAL(colorEdited(const QColor&)), this,
                      SLOT(SetColor(const QColor&)));
+    QObject::connect(ui_.show_covariance, SIGNAL(toggled(bool)), this,
+                     SLOT(CovariancedToggled(bool)));
+    QObject::connect(ui_.show_all_covariances, SIGNAL(toggled(bool)), this,
+                     SLOT(ShowAllCovariancesToggled(bool)));
     QObject::connect(ui_.buttonResetBuffer, SIGNAL(pressed()), this,
                      SLOT(ClearPoints()));
   }
@@ -140,6 +144,36 @@ namespace mapviz_plugins
     stamped_point.orientation.setRPY(0, 0, 0);
     stamped_point.source_frame = tf_manager_->LocalXyUtil()->Frame();
 
+    if ( ui_.show_covariance->isChecked() )
+    {
+      tf2::Matrix3x3 tf_cov =
+          swri_transform_util::Get3x3Cov(navsat->position_covariance);
+
+      if (tf_cov[0][0] < 100000 && tf_cov[1][1] < 100000)
+      {
+        cv::Mat cov_matrix_3d(3, 3, CV_32FC1);
+        for (int32_t r = 0; r < 3; r++)
+        {
+          for (int32_t c = 0; c < 3; c++)
+          {
+            cov_matrix_3d.at<float>(r, c) = tf_cov[r][c];
+          }
+        }
+
+        cv::Mat cov_matrix_2d = swri_image_util::ProjectEllipsoid(cov_matrix_3d);
+
+        if (!cov_matrix_2d.empty())
+        {
+          stamped_point.cov_points = swri_image_util::GetEllipsePoints(
+              cov_matrix_2d, stamped_point.point, 3, 32);
+
+          stamped_point.transformed_cov_points = stamped_point.cov_points;
+        } else {
+          RCLCPP_ERROR(node_->get_logger(), "Failed to project x, y, z covariance to xy-plane.");
+        }
+      }
+    }
+
     pushPoint( std::move(stamped_point) );
   }
 
@@ -174,6 +208,10 @@ namespace mapviz_plugins
 
   void NavSatPlugin::Draw(double x, double y, double scale)
   {
+    if (ui_.show_covariance->isChecked())
+    {
+      DrawCovariance();
+    }
     if (DrawPoints(scale))
     {
       PrintInfo("OK");
@@ -224,6 +262,20 @@ namespace mapviz_plugins
       BufferSizeChanged(buffer_size);
     }
 
+    if (node["show_covariance"])
+    {
+      bool show_covariance = node["show_covariance"].as<bool>();
+      ui_.show_covariance->setChecked(show_covariance);
+      CovariancedToggled(show_covariance);
+    }
+
+    if (node["show_all_covariances"])
+    {
+      bool show_all_covariances = node["show_all_covariances"].as<bool>();
+      ui_.show_all_covariances->setChecked(show_all_covariances);
+      ShowAllCovariancesToggled(show_all_covariances);
+    }
+
     TopicEdited();
   }
 
@@ -242,5 +294,11 @@ namespace mapviz_plugins
                YAML::Value << positionTolerance();
 
     emitter << YAML::Key << "buffer_size" << YAML::Value << bufferSize();
+
+    bool show_covariance = ui_.show_covariance->isChecked();
+    emitter << YAML::Key << "show_covariance" << YAML::Value << show_covariance;
+
+    bool show_all_covariances = ui_.show_all_covariances->isChecked();
+    emitter << YAML::Key << "show_all_covariances" << YAML::Value << show_all_covariances;
   }
 }   // namespace mapviz_plugins
