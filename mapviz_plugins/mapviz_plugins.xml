@@ -32,6 +32,9 @@
   <class name="mapviz_plugins/grid" type="mapviz_plugins::GridPlugin" base_class_type="mapviz::MapvizPlugin">
     <description>Grid mapviz plugin.</description>
   </class>
+  <class name="mapviz_plugins/html" type="mapviz_plugins::HtmlPlugin" base_class_type="mapviz::MapvizPlugin">
+    <description>Displays a HTML document encoded in a std_msgs/String at a fixed point on the canvas.</description>
+  </class>
   <class name="mapviz_plugins/image" type="mapviz_plugins::ImagePlugin" base_class_type="mapviz::MapvizPlugin">
     <description>Image mapviz plugin.</description>
   </class>
@@ -81,4 +84,3 @@
     <description>Display maps and other OccupancyGrids</description>
   </class>
 </library>
-
