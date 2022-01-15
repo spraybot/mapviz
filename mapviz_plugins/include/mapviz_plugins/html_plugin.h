@@ -116,7 +116,7 @@ protected Q_SLOTS:
   void SetOffsetY(int offset);
 
 private:
-  Ui::string_config ui_;
+  Ui::html_config ui_;
   QWidget* config_widget_;
 
   std::string topic_;
