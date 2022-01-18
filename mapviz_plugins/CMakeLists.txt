@@ -33,7 +33,7 @@ find_package(marti_common_msgs REQUIRED)
 find_package(marti_nav_msgs REQUIRED)
 find_package(marti_sensor_msgs REQUIRED)
 find_package(marti_visualization_msgs REQUIRED)
-# find_package(move_base_msgs REQUIRED)
+find_package(nav2_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -81,7 +81,7 @@ set(UI_FILES
     ui/laserscan_config.ui
     ui/marker_config.ui
     ui/measuring_config.ui
-    # ui/move_base_config.ui
+    ui/nav2_config.ui
     ui/navsat_config.ui
     ui/occupancy_grid_config.ui
     ui/odometry_config.ui
@@ -112,7 +112,7 @@ set(SRC_FILES
     src/laserscan_plugin.cpp
     src/marker_plugin.cpp
     src/measuring_plugin.cpp 
-    # src/move_base_plugin.cpp
+    src/nav2_plugin.cpp
     src/navsat_plugin.cpp
     src/occupancy_grid_plugin.cpp
     src/odometry_plugin.cpp 
@@ -144,7 +144,7 @@ set(HEADER_FILES
     include/${PROJECT_NAME}/laserscan_plugin.h
     include/${PROJECT_NAME}/marker_plugin.h
     include/${PROJECT_NAME}/measuring_plugin.h
-    # include/${PROJECT_NAME}/move_base_plugin.h
+    include/${PROJECT_NAME}/nav2_plugin.h
     include/${PROJECT_NAME}/navsat_plugin.h
     include/${PROJECT_NAME}/occupancy_grid_plugin.h
     include/${PROJECT_NAME}/odometry_plugin.h
@@ -188,7 +188,7 @@ ament_target_dependencies(${PROJECT_NAME}
     marti_nav_msgs
     marti_sensor_msgs
     marti_visualization_msgs
-    # move_base_msgs
+    nav2_msgs
     nav_msgs
     pluginlib
     rclcpp

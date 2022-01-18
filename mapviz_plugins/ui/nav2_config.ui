@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>move_base_config</class>
- <widget class="QWidget" name="move_base_config">
+ <class>nav2_config</class>
+ <widget class="QWidget" name="nav2_config">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -54,40 +54,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonInitialPose">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>110</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Publish robot pose on topic [/initialpose]&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="text">
-        <string>Estimated Pose</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../mapviz/src/resources/icons.qrc">
-         <normaloff>:/images/green-arrow.png</normaloff>:/images/green-arrow.png</iconset>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="pushButtonGoalPose">
        <property name="minimumSize">
         <size>
@@ -107,7 +73,7 @@
         </font>
        </property>
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send a goal to [move_base] action server&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send a goal to [nav2] action server&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="text">
         <string>2D Nav Goal</string>
