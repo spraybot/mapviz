@@ -233,7 +233,7 @@ namespace mapviz_plugins
     {
       pc2_sub_ = node_->create_subscription<sensor_msgs::msg::PointCloud2>(
         topic_,
-        rclcpp::QoS(10),
+        rclcpp::SensorDataQoS(rclcpp::KeepLast(10)),
         std::bind(&PointCloud2Plugin::PointCloud2Callback, this, std::placeholders::_1)
       );
       new_topic_ = true;
