@@ -123,10 +123,10 @@ namespace mapviz_plugins
     marker_array_sub_.reset();
     if (!topic_.empty())
     {
-      marker_sub_ = node_->create_subscription<visualization_msgs::msg::Marker>(
-          topic_,
-          rclcpp::QoS(100),
-          std::bind(&MarkerPlugin::handleMarker, this, std::placeholders::_1));
+      // marker_sub_ = node_->create_subscription<visualization_msgs::msg::Marker>(
+      //     topic_,
+      //     rclcpp::QoS(100),
+      //     std::bind(&MarkerPlugin::handleMarker, this, std::placeholders::_1));
       marker_array_sub_ = node_->create_subscription<visualization_msgs::msg::MarkerArray>(
           topic_,
           rclcpp::QoS(100),
